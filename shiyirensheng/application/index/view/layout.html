@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<header id="header">
+        <div class="common-width clearfix">
+            <h1 class="fl">
+                <a class="logo base-logo" href="__PUBLIC__/index">外卖超人</a>
+            </h1>
+               <ul class="member" login-box>
+                    <li>
+                        <a href="__PUBLIC__/index" class="index">首页</a>
+                    </li>
+                    {if empty($Think.session.username)}
+                        <li class="login-register">
+                            <a href="__PUBLIC__/index/user/login" referer-url  class="login"  rel="nofollow">登录</a><span class="cg">/</span>
+                            <a href="__PUBLIC__/index/user/register" referer-url  rel="nofollow" class="register">注册</a>
+                        </li>
+                    {else}
+                        <li class="userName">
+                            <a href="" rel="nofollow" draw-user>{$Think.session.username} <em></em></a>
+                        </li>
+                        <li class="userName">
+                            <a href="__PUBLIC__/index/user/personal" class="order-center"  rel="nofollow">个人中心</a>
+                        </li>
+                        <li class="userName">
+                            <a id="logout" href="__PUBLIC__/index/user/logout" referer-url rel="nofollow">退出</a>
+                        </li>
+                        <li class=""><a href="__PUBLIC__/index/shop/list"  rel="nofollow">店铺列表</a></li>
+                        {if ($Think.session.udertype) == 1 || ($Think.session.udertype) == 2}
+                        <li class=""><a href="__PUBLIC__/shopadmin/user/lrxlogin"  rel="nofollow">店铺管理</a></li>
+                        {/if}
+                        {if ($Think.session.udertype) == 2}
+                        <li class="phone-client "><a href="__PUBLIC__/admin/sadmin/login"  rel="nofollow"><span>管理中心</span></a></li>
+                        {/if}
+                    {/if}  
+                </ul> 
+        </div>
+    </header>
+{__CONTENT__}
+    <footer id="footer">
+        <div class="footer-first gray">           
+            <div class="company-info clearfix fs14 gray">
+                <a href="about.html" target="_blank"  rel="nofollow">关于我们</a>
+                <a href="help.html" target="_blank"  rel="nofollow">帮助中心</a>
+                <a href="javascript:;" target="_blank"  rel="nofollow">法律声明</a>
+                <a href="jobs.html" target="_blank"  rel="nofollow">人才招聘</a>
+                <a href="contact.html" target="_blank"  rel="nofollow">联系我们</a>
+                <a href="javascript:;" user-feedback ng-click="userFeedback=true" class="last" rel="nofollow">意见反馈</a>
+                <a href="javascript:;" class="last" target="_blank" style="display:none">北京餐厅导航</a>
+            </div> 
+        </div>
+        <div class="footer-last">
+            <a target="_blank" class="foot-logo-1 base-logo" href="index.html"></a>
+            <div class="tc fs14 light-gray mb10">
+              ©2014 waimaichaoren.com All Rights Reserved - 沪ICP备11019908号
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

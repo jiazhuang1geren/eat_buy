@@ -1,0 +1,163 @@
+<!DOCTYPE html">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="__PUBLIC__/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/ace.min.css" />
+    <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/css/pintuer.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/admin.css">
+    <!-- <script src="__PUBLIC__/js/pintuer.js"></script>   -->
+    <title>管理登陆</title>
+</head>
+
+<body class="login-layout Reg_log_style">
+    <div class="logintop">
+        <span>欢迎登录后台管理界面</span>
+        <ul>
+            <li><a href="__PUBLIC__/index/index/index">返回首页</a></li>
+            <li><a href="">帮助</a></li>
+            <li><a href="">关于</a></li>
+        </ul>
+    </div>
+        <div class="container">
+            <div class="line bouncein">
+                <div class="xs6 xm4 xs3-move xm4-move">
+                    <div style="height:90px;"></div>
+                    <div class="media media-y margin-big-bottom">           
+                    </div>         
+                    <form action="{:url('admin/sadmin/dologin')}" method="post" onsubmit="return login()">
+                    <div class="panel loginbox">
+                        <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
+                        <div class="panel-body">
+                            <div class="form-group" style="margin:0">
+                                <div class="field field-icon-right" >
+                                    <input type="text" class="input input-big" name="uname" id="name" placeholder="请输入登录账号"/>
+                                    <span class="icon icon-user margin-small" style="padding-top:10px;"></span>
+                                </div>
+                                <label style="margin:0" id="ftp"></label>
+                            </div>
+                            <div class="form-group" style="margin:0">
+                                <div class="field field-icon-right">
+                                    <input type="password" class="input input-big" name="password" id="password" placeholder="请输入登录密码" />
+                                    <span class="icon icon-key margin-small" style="padding-top:10px;"></span>
+                                </div>
+                                <label style="margin:0" id="ftp1"></label>
+                            </div>
+                            <div class="form-group">
+                                <div class="field">
+                                    <input type="text" class="input input-big" name="code" id="code" placeholder="请填写右侧的验证码"/>
+                                   <img src="{:captcha_src()}" width="110" height="32" class="passcode" style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">                          
+                                </div>
+                                <label style="margin:0" id="ftp2"></label>
+                            </div>
+                        </div>
+                        <div style="padding-left:15px;padding-right:15px;padding-bottom:15px;"><input type="submit" class="button button-block bg-main text-big input-big" value="登录" id="log"></div>
+                    </div>
+                    </form>          
+                </div>
+            </div>
+        </div>
+    <div class="loginbm">版权所有 2017 <a href="">吃货外卖后台系统有限公司</a> </div><strong></strong>
+</body>
+</html>
+<script type="text/javascript">
+    // var log = document.getElementById('ftp');
+    //用户名
+    $('#name').blur(function(){
+        var uname = $('#name').val();
+        var ftp   = document.getElementById('ftp');
+        if (uname == '') {
+            document.getElementsByTagName("input")[0].setAttribute('placeholder','用户名不能为空');
+        } else {
+            $.ajax({
+                type:'post',
+                url:'/admin/sadmin/name',
+                async:true,
+                data:{'uname':uname},
+                success:function(data){
+                    if (!data) {
+                       ftp.innerHTML = '用户名错误';
+                       ftp.style.color = 'red';
+                       $('#log').attr("disabled",true);
+                    } else {
+                       ftp.innerHTML = '用户名正确';
+                       ftp.style.color = 'green';
+                       $('#log').attr("disabled",false);
+                    }
+                }
+            });
+        }    
+    });
+
+    //密码
+    $('#password').blur(function(){
+        var password = $('#password').val();
+        var ftp   = document.getElementById('ftp1');
+        if (password == '') {
+            document.getElementsByTagName("input")[1].setAttribute('placeholder','密码不能为空');
+        } else {
+            $.ajax({
+                type:'post',
+                url:'/admin/sadmin/rpassword',
+                async:true,
+                data:{'password':password},
+                success:function(data){
+                    if (!data) {
+                        ftp.innerHTML = '密码错误';
+                        ftp.style.color = 'red';
+                        $('#log').attr("disabled",true);
+                    } else {
+                        ftp.innerHTML = '密码正确';
+                        ftp.style.color = 'green';
+                        $('#log').attr("disabled",false);
+                    }
+                }
+            })
+        }
+    });
+
+    //验证码
+    $('#code').blur(function(){
+        var code = $('#code').val();
+        var ftp  = document.getElementById('ftp2');
+        if (code == '') {
+            document.getElementsByTagName("input")[2].setAttribute('placeholder','验证码不能为空');
+        } else {
+            $.ajax({
+                type:'post',
+                url:'/admin/sadmin/code',
+                async:true,
+                data:{'code':code},
+                success:function(data){
+                    if (data) {
+                        ftp.innerHTML = '验证码正确';
+                        ftp.style.color = 'green';
+                        $('#log').attr("disabled",false);
+                    } else {
+                        ftp.innerHTML = '验证码错误';
+                        ftp.style.color = 'red';
+                        $('#log').attr("disabled",true);
+                    }
+                }
+            })
+        }
+    });
+
+    function login()
+    {
+        var code = $('#code').val();
+        var password = $('#password').val();
+        var uname = $('#name').val();
+        if (uname == '') {
+            return false;
+        } else if (password == '') {
+            return false;
+        } else if (code == '') {
+            return false;
+        } else {
+            return true;
+        }
+    } 
+</script>

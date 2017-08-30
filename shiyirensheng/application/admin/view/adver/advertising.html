@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link href="__PUBLIC__/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/css/style.css" />
+    <link href="__PUBLIC__/assets/css/codemirror.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/font/css/font-awesome.min.css" />
+    <script src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+    <script src="__PUBLIC__/assets/js/typeahead-bs2.min.js"></script>
+    <script src="__PUBLIC__/js/lrtk.js" type="text/javascript"></script>
+    <!-- <script src="__PUBLIC__/assets/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script src="__PUBLIC__/assets/js/jquery.dataTables.bootstrap.js"></script> -->
+    <script src="__PUBLIC__/assets/layer/layer.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__PUBLIC__/Widget/swfupload/swfupload.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Widget/swfupload/swfupload.queue.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Widget/swfupload/swfupload.speed.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Widget/swfupload/handlers.js"></script>
+    <title>广告管理</title>
+</head>
+
+<body>
+    <div class="border clearfix">
+        <span class="l_f">
+        <a href="javascript:void(0);" onclick="ads_add();" class="btn btn-warning"><i class="fa fa-plus"></i> 添加广告</a>
+        <a href="javascript:void(0);" class="btn btn-danger"><i class="fa fa-trash"></i> 批量删除</a>
+        <a href="javascript:void(0);" class="btn btn-success" onclick="dosubmit()">取消</a>
+       </span>
+        <span class="r_f">共：<b>45</b>条广告</span>
+    </div>
+    <div class="Ads_lists">
+        <form action="./add_photo" method="post" accept-charset="utf-8" enctype="multipart/form-data" style="display:none;" id="from">
+        <!-- style="display:none;" -->
+            <table class="table table-hover">
+                <tr>
+                   <td>添加分类</td>
+                   <td>
+                       <select name="classify">
+                           <option value="广告类">广告类</option>
+                       </select>
+                   </td>
+                </tr>
+                <tr>
+                    <td>上传图片</td>
+                    <td><input type="file" name="file"></td>
+                </tr>
+                <tr>
+                    <td>上传url</td>
+                    <td><input type="text" name="url"></td>
+                </tr>
+                <tr>
+                    <td>图片状态</td>
+                    <td>
+                        <select name="stuu" >
+                            <option value="0">显示</option>
+                            <option value="1">隐藏</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="submit" name="submit" value="提交"></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        <table class="table table-striped table-bordered table-hover" id="sample-table">
+            <thead>
+                <tr>
+                    <th width="25"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
+                    <th width="80">ID</th>
+                    <th width="100">分类</th>
+                    <th width="220px">图片</th>
+                    <th width="250px">链接地址</th>
+                    <th width="180px">加入时间</th>
+                    <th width="70px">状态</th>
+                    <th width="250px">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {foreach $adver as $value}
+                <tr>
+                    <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
+                    <td>{$value['adid']}</td>
+                    <td>{$value['classify']}</td>
+                    <td><span class="ad_img"><img src="__PUBLIC__/{$value['adpicture']}"  width="80px" height="60px"/></span></td>
+                    <td><a href="{$value['adurl']}" target="_blank">{$value['adurl']}</a></td>
+                    <td>{$value['create_time']}</td>
+                    {if $value['status'] == 0}
+                    <td class="td-status"><span class="label label-success radius">显示</span></td>
+                    {else}
+                    <td class="td-status"><span class="label label-defaunt radius">已关闭</span></td>
+                    {/if}
+                    <td class="td-manage">
+                    {if $value['status'] == 0}
+                        <a onclick="member_stop(this,{$value['adid']})" href="javascript:;" title="停用" class="btn btn-xs btn-close"><i class="fa fa-close bigger-120"></i></a>
+                    {else}
+                        <a onclick="member_start(this,{$value['adid']})" href="javascript:;" title="启用" class="btn btn-xs btn-success"><i class="fa fa-check  bigger-120"></i></a>
+                    {/if}
+                        <!-- <a title="编辑" onclick="member_edit('编辑','member_add.html','4','','510')" href="javascript:;" class="btn btn-xs btn-info"><i class="fa fa-edit bigger-120"></i></a> -->
+                        <a title="删除" href="javascript:;" onclick="member_del(this,{$value['adid']})" class="btn btn-xs btn-warning"><i class="fa fa-trash  bigger-120"></i></a>
+                    </td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>  
+</body>
+</html>
+
+<script type="text/javascript">
+    function ads_add(){
+        var from = document.getElementById('from');
+        from.style.display = 'block';
+    }
+    function ys_e(){
+        var from = document.getElementById('from');
+        from.style.display = 'none';
+    }
+    function dosubmit(){
+        var from = document.getElementById('from');
+        from.style.display = 'none';
+    }
+</script>
+<script>
+    //初始化宽度、高度  
+    $(".widget-box").height($(window).height());
+    $(".Ads_list").width($(window).width() - 220);
+    //当文档窗口发生改变时 触发  
+    $(window).resize(function() {
+        $(".widget-box").height($(window).height());
+        $(".Ads_list").width($(window).width() - 220);
+    });
+    $(function() {
+        $("#advertising").fix({
+            float: 'left',
+            //minStatue : true,
+            skin: 'green',
+            durationTime: false,
+            stylewidth: '220',
+            spacingw: 30, //设置隐藏时的距离
+            spacingh: 250, //设置显示时间距
+            set_scrollsidebar: '.Ads_style',
+            table_menu: '.Ads_list'
+        });
+    });
+    /*广告图片-停用*/
+    function member_stop(obj,id) {
+        $.ajax({
+            type:'post',
+            url:'./tingyong',
+            async:true,
+            data:{'id':id},
+            success:function(res){
+                if (res) {
+                    window.location.href = './advertising';
+                }
+            }
+        })
+    }
+    /*广告图片-启用*/
+    function member_start(obj,id) {
+        $.ajax({
+            type:'post',
+            url:'./qingyong',
+            async:true,
+            data:{'id':id},
+            success:function(res){
+                if (res) {
+                    window.location.href = './advertising';
+                }
+            }
+        })
+    }
+    /*广告图片-删除*/
+    function member_del(obj, id) {
+        layer.confirm('确认要删除吗？', {
+            icon: 0,
+        }, function(index) {
+            $.ajax({
+                type:'post',
+                url:'./dele_adver',
+                async:true,
+                data:{'id':id},
+                success:function(res){
+                    if (res) {
+                        // window.location.href = './advertising';
+                        return true;
+                    }
+                }
+            });
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!', {
+                icon: 1,
+                time: 1000
+            });
+        });
+    }
+    /*******添加广告*********/
+
+</script>
+
+<script>
+    jQuery(function($) {
+        // var oTable1 = $('#sample-table').dataTable({
+        //     "aaSorting": [
+        //         [1, "desc"]
+        //     ], //默认第几个排序
+        //     "bStateSave": true, //状态保存
+        //     "aoColumnDefs": [
+        //         //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+        //         {
+        //             "orderable": false,
+        //             "aTargets": [0, 2, 3, 4, 5, 7, 8, ]
+        //         } // 制定列不参与排序
+        //     ]
+        // });
+
+
+        $('table th input:checkbox').on('click', function() {
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function() {
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+
+        });
+
+        // $('[data-rel="tooltip"]').tooltip({
+        //     placement: tooltip_placement
+        // });
+
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table')
+            var off1    = $parent.offset();
+            var w1      = $parent.width();
+            var off2    = $source.offset();
+            var w2      = $source.width();
+            if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
+            return 'left';
+        }
+    })
+</script>

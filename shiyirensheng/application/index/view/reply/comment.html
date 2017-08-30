@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" /> 
+  <meta name="description" content="北京" /> 
+  <meta name="viewport" content="user-scalable=no" /> 
+  <meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" /> 
+  <meta name="baidu-site-verification" content="IYCrtVH0i1" /> 
+  <meta property="wb:webmaster" content="239d3d1dbdde1b2c" /> 
+  <link rel="icon" type="image/png" href="__PUBLIC__/images1/favicon.ico" /> 
+  <script type="text/javascript">
+        
+        (function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
+    </script> 
+  <link rel="stylesheet" href="__PUBLIC__/css1/common.css" /> 
+  <link rel="stylesheet" href="__PUBLIC__/css1/menuPage.css" /> 
+
+  <title>店铺评论</title> 
+ </head> 
+ <body class="day " ng-controller="bodyCtrl" day-or-night=""> 
+  <section class="common-back" id="wrapBackground">
+    {layout name=&quot;layout&quot; /} 
+  <div id="main-box"> 
+    <!--二维码--> 
+    <div class="qrCode-frame" ng-hide="qrCodeStatus"> 
+     <img src="__PUBLIC__/images1/wx.png" alt="扫描二维码" /> 
+     <em ng-click="qrCodeStatus=true">X</em> 
+    </div> 
+    <div ng-controller="colorAction"> 
+     <div class="dayColor_two"></div> 
+     <div class="dayColor_one"></div> 
+     <div class="dayColor_three" ng-class="{dayColor_threeActive:threeActive}"></div> 
+    </div> 
+    <section class="menupage-main common-width">
+    {foreach $detail as $value} 
+     <header class="nav clearfix"> 
+      <div class="fl clearfix nav-des"> 
+       <img src="__PUBLIC__/images1/dc.jpg" class="fl" /> 
+       <div class="fl nav-des-text"> 
+        <h2 class="ellipsis" title="">{$value['sname']}</h2> 
+        <div class="clearfix"> 
+         <div class="fl nav-review"> 
+          <div style="width:65.00px;"></div> 
+         </div> 
+         <p class="nav-review-x">5星</p> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="fr clearfix nav-right"> 
+       <div class="fl nav-right-blast line-right"> 
+        <p>{//$value['price']}30<span style="font-size:12px;color:#999;">元</span></p> 
+        <span>起送</span> 
+       </div> 
+       <div class="fl nav-right-blast"> 
+        <p>{//$value['time']}50<span style="font-size:12px;color:#999;">分钟</span></p> 
+        <span>送餐时间</span> 
+       </div> 
+       <div class="fl nav-right-collect line-left"> 
+        <div class="collect not-collect" title="收藏餐厅" data-rid="1592"></div> 
+        <div class="collect-success">
+         收藏成功
+        </div> 
+        <div id="review-text">
+         未收藏
+        </div> 
+       </div> 
+      </div>
+      <div class="share"> 
+        <!-- Baidu Button BEGIN -->
+        <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare"> <span class="bds_more">分享到：</span> <a class="bds_qzone" title="分享到QQ空间" href="#"></a> <a class="bds_tsina" title="分享到新浪微博" href="#"></a> <a class="bds_tqq" title="分享到腾讯微博" href="#"></a> <a class="bds_renren" title="分享到人人网" href="#"></a> <a class="bds_t163" title="分享到网易微博" href="#"></a> <a class="shareCount" href="#" title="累计分享0次">0</a></div>
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" src="http://bdimg.share.baidu.com/static/js/bds_s_v2.js?cdnversion=416434"></script> 
+        
+</div> 
+     </header> 
+     <ul class="clearfix menu-nav-list" scroll-position-static="160"> 
+      <li class="no-line "><a href="__PUBLIC__/index/shop/intro?sid={$value['sid']}">餐厅介绍</a></li> 
+      <li><a href="__PUBLIC__/index/shop/detail?sid={$value['sid']}">菜单</a></li> 
+      <li class="active"><a href="__PUBLIC__/index/reply/comment?sid={$value['sid']}">评论</a></li>  
+     </ul>
+     {/foreach} 
+     <section class="main-box"> 
+      <section class="review-messages"> 
+       <header class="review-header-box clearfix">
+         全部评论（共177条评论） 
+        <label class="checkbox view-check fr" title="有内容的评论" model="filterObj"> 
+         <div class="checker">
+          <span ng-class="{checked:model}"> <input type="checkbox" ng-model="model" ng-true-value="true" ng-disabled="disable" class="ng-pristine ng-valid" /> </span> 
+         </div> <span class="ng-binding">有内容的评论</span> </label> 
+       </header> 
+       
+       <article class="review-item"> 
+        <div class="fr review-search order-detail"> 
+         <a href="javascript:" class="review-read-color review-order" detailkey="dbqlxS8-eRedBg0sUB6zZDcgNJwAKrHZKmERaWPzxe7bbQZR8czsfrP2Z1PfZAGz">看他点了什么> </a> 
+         <div class="order-menu-info"> 
+          <div class="order-menu-inner"> 
+           <div class="order-loding" ng-hide="loadStatus['dbqlxS8-eRedBg0sUB6zZDcgNJwAKrHZKmERaWPzxe7bbQZR8czsfrP2Z1PfZAGz']"> 
+            <img src="images/o_loading.gif" alt="" /> 
+           </div> 
+           <div class="order-loding" ng-show="loadError['dbqlxS8-eRedBg0sUB6zZDcgNJwAKrHZKmERaWPzxe7bbQZR8czsfrP2Z1PfZAGz']" ng-bind="errorText"></div> 
+           <div class="order-menu-body"> 
+            <div class="order-detail-item" ng-class="{last:$last}" ng-repeat="menu_itemmenu_item in menuItenmenus['dbqlxS8-eRedBg0sUB6zZDcgNJwAKrHZKmERaWPzxe7bbQZR8czsfrP2Z1PfZAGz'] track by $index"> 
+             <div class="goods-name ellipsis" ng-bind="menu_itemmenu_item"></div> 
+            </div> 
+           </div> 
+          </div> 
+          <div class="menu-close">
+           &times;
+          </div> 
+         </div> 
+        </div> 
+        <span>136****1674</span> 
+        <span>2015-05-01 12:23:16</span> 
+        <span class="small-star"> <span style="width:65.00px;"></span> </span> 
+        <div class="review-content"></div> 
+       </article>
+
+       <!--PC版-->
+<div id="SOHUCS" sid="请将此处替换为配置SourceID的语句"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cyt1uUp2H',
+conf: 'prod_d6bfa9dc7238e7e69a042887c4870825'
+});
+</script>
+ 
+       <page total="18" show="5"></page> 
+      </section> 
+     </section> 
+    </section> 
+   </div> 
+  </section> 
+
+  <dh-dialog class="disnone" type="login" height="500" header="登录" show="loginShow"> 
+   <form class="login-form" novalidate="" name="loginForm" ng-controller="loginCtrl"> 
+    <div class="form-group"> 
+     <label for="">手机号码</label> 
+     <div> 
+      <input type="text" ng-model="user.username" ng-class="{error:user.usernameMessage}" ng-focus="user.usernameMessage=''" maxlength="11" placeholder="请输入你的手机号码" /> 
+      <span class="vaildate-error" ng-if="user.usernameMessage"> <span ng-bind="user.usernameMessage"></span> </span> 
+      <span class="vaildate-error" ng-if="user.isLogined"> 该手机号码尚未注册！<a href="javascript:;" ng-click="locationRegister()" class="link">立即注册</a> </span> 
+     </div> 
+    </div> 
+    <div class="form-group mb10"> 
+     <label for="">登录密码</label> 
+     <div> 
+      <input type="password" onpaste="return false" ng-model="user.password" ng-focus="user.passwordMessage=''" ng-class="{error:user.passwordMessage}" maxlength="10" placeholder="请输入登录密码" /> 
+      <span class="vaildate-error" ng-if="user.passwordMessage"> <span ng-bind="user.passwordMessage"></span> </span> 
+     </div> 
+    </div> 
+    <div ng-init="showCaptcha=0" ng-if="showCaptcha" class="form-group inline clearfix mb10"> 
+     <div class="fl w50p"> 
+      <input type="text" ng-model="user.captcha" ng-focus="user.captchaMessage=''" ng-class="{error:user.captchaMessage}" placeholder="请输入验证码" /> 
+      <span class="vaildate-error" ng-if="user.captchaMessage"> <span ng-bind="user.captchaMessage"></span> </span> 
+     </div> 
+     <label class="fr"> 
+      <dh-captcha change="captchaChange" src="/captcha/"></dh-captcha> </label> 
+    </div> 
+    <div class="clearfix mb10"> 
+     <dh-checkbox model="user.rememberme" title="记住我" class="fl"></dh-checkbox> 
+     <a href="/account/password/reset_via_mobile/" target="_blank" class="fs12 fr link">忘记密码</a> 
+    </div> 
+    <button class="big-btn btn-green btn mb10" ng-click="loginVaildate()" ng-disabled="loginBtnDisabled" ng-bind="loginBtn"></button> 
+    <div class="clearfix"> 
+     <span class="fr fs12"> 没有账号? <a href="javascript:void(0)" ng-click="locationRegister()" class="link">立即注册</a> </span> 
+    </div> 
+   </form> 
+  </dh-dialog> 
+  <dh-dialog class="disnone" type="register" height="500" header="注册" show="registerShow"> 
+   <form ng-controller="registerCtrl" class="register-form" name="registerForm"> 
+    <div class="form-group mb10"> 
+     <label for="">手机号码</label> 
+     <div> 
+      <input type="text" ng-class="{error:user.usernameMessage}" maxlength="11" placeholder="请输入您的手机号码" ng-model="user.username" /> 
+      <span class="vaildate-error" ng-if="user.usernameMessage"> <span ng-bind="user.usernameMessage"></span> </span> 
+      <span class="vaildate-error" ng-if="user.isRegistered"> 该手机号码已经注册！<a href="javascript:;" ng-click="locationLogin()" class="link">立即登录</a> </span> 
+     </div> 
+    </div> 
+    <div class="form-group captcha-wrap"> 
+     <div class="clearfix captcha-box"> 
+      <div class="fl form-group captcha-item"> 
+       <div class="fl w50p"> 
+        <input type="text" ng-class="{error:user.captchaMessage}" ng-focus="user.captchaMessage=''" placeholder="请输入验证码" ng-model="user.captcha" /> 
+        <span class="vaildate-error" ng-if="user.captchaMessage"> <span ng-bind="user.captchaMessage"></span> </span> 
+       </div> 
+       <button class="fs12 fr w40p btn btn-pink" ng-click="getCaptcha()" ng-disabled="captchaDisabled" ng-bind="captchaVal"></button> 
+      </div> 
+      <div class="fl form-group captcha-item"> 
+       <div class="fl w50p"> 
+        <input type="text" ng-model="user.imgCaptcha" maxlength="4" ng-disabled="imgCaptchaIsDisabled" ng-class="{error:user.imgCaptchaMessage}" placeholder="请输入验证码" /> 
+        <span class="vaildate-error" ng-if="user.imgCaptchaMessage"> <span ng-bind="user.imgCaptchaMessage"></span> </span> 
+       </div> 
+       <label class="fr"> 
+        <dh-captcha style="width:119px;height:34px;" change="captchaImgChange" src="/captcha/"></dh-captcha> </label> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="form-group mb10"> 
+     <label for="">登录密码</label> 
+     <div>
+      <input type="password" ng-class="{error:user.passwordMessage}" ng-focus="user.passwordMessage=''" maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password" /> 
+      <span class="vaildate-error" ng-if="user.passwordMessage"> <span ng-bind="user.passwordMessage"></span> </span> 
+     </div> 
+    </div> 
+    <div class="form-group mb10"> 
+     <div>
+      <input type="password" ng-class="{error:user.password2Message}" ng-focus="user.password2Message=''" maxlength="10" onpaste="return false" placeholder="输入登录密码 6-10个字符" ng-model="user.password2" /> 
+      <span class="vaildate-error" ng-if="user.password2Message"> <span ng-bind="user.password2Message"></span> </span> 
+     </div> 
+    </div> 
+    <div class="clearfix mb10"> 
+     <dh-checkbox model="user.remember" title="我同意外卖超人" class="fl"></dh-checkbox> 
+     <a href="/terms-and-conditions/" target="_blank" class="fs12 fl link"> &quot; 注册条款 &quot;</a> 
+    </div> 
+    <button ng-disabled="!user.remember || registerBtnDisabled" ng-click="registerVaildate()" class="big-btn btn-green btn mb10" ng-bind="registerBtn"></button> 
+   </form> 
+  </dh-dialog> 
+  <script>
+    var common_sms_code = '/ajax/common_sms_code/';
+    var ajax_customer_user_register_start = '/ajax/customer_user_register_start/';
+    var common_validate_sms_code = '/ajax/common_validate_sms_code/';
+    var ajax_customer_user_register_register = '/ajax/customer_user_register_register/';
+</script> 
+  <dh-dialog class="disnone" type="alert" index="1001" header="" show="showErrorMsg"> 
+   <div class="alert-box" ng-class="errorIcon"> 
+    <p ng-bind="errorMsg"></p> 
+   </div> 
+  </dh-dialog> 
+  <ul class="site-fixed"> 
+   <li class="scroll-top"><img src="__PUBLIC__/images1/scroll_top1.png" alt="" /> </li> 
+    <li class="scorll-feekback" >
+            <img src="__PUBLIC__/images1/scorll_feekback.png"/>
+            <a id="togbook" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=0Ojp6ODi5_Xm6JChof6zv70" style="text-decoration:none;" title="给我留言"></a>
+        </li> 
+   <li class="scroll-wx"> <img src="__PUBLIC__/images1/scroll_wx.png" alt="" /> 
+    <div>
+     <img src="__PUBLIC__/images1/wx.png" alt="" />
+    </div> </li> 
+  </ul> 
+  <script type="text/javascript" src="__PUBLIC__/js1/angular.min.js"></script> 
+  <script src="__PUBLIC__/js1/common.js"></script> 
+  <script src="__PUBLIC__/js1/service.js"></script> 
+  <script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script> 
+  <!--[if lt IE 9]><script src="js/fix.js"></script><![endif]--> 
+  <script>
+        //字符替换
+        String.prototype.changeQuery = function (name, value) {
+            var reg = new RegExp("(^|)" + name + "=([^&]*)(|$)");
+            var tmp = name + "=" + value;
+            if (this.match(reg) != null) {
+                return this.replace(eval(reg), tmp);
+            }
+            else {
+                if (this.match("[\?]")) {
+                    return this + "&" + tmp;
+                }
+                else {
+                    return this + "?" + tmp;
+                }
+            }
+        }
+        //获取URL参数
+        function getQueryStringRegExp(name) {
+            var reg = new RegExp("(^|\\?|&)" + name + "=([^&]*)(\\s|&|$)", "i");
+            if (reg.test(location.href))
+                return unescape(RegExp.$2.replace(/\+/g, " "));
+            return "";
+        }
+        function SetUrlParm(parm, value) {
+            var URL = location.href;
+            if (URL.indexOf('?') < 0) {
+                URL += '?' + parm + '=' + value;
+            }
+            else {
+                var dataParm = getQueryStringRegExp(parm);
+                if (dataParm == '') {
+                    URL += '&' + parm + '=' + value;
+                }
+                else {
+                    URL = URL.changeQuery(parm, value);
+                }
+            }
+            return URL;
+        }
+        app.directive("viewCheck",function(){
+            return{
+                restrict:'C',
+                link: function(scope,elem,attrs){
+                    elem.on('click',function(e){
+                        e=e||window.event;
+                        var elem= e.target;
+                        var url=window.location.href;
+                        if(getQueryStringRegExp("content")!="false"&&getQueryStringRegExp("content")!=""&&getQueryStringRegExp("content")!=null){
+                             url=url.changeQuery("content","false");
+                               if(url.indexOf("page")>0){
+                                    window.location.href=url.changeQuery("page","1");
+                                }else{
+                                    window.location.href=url;
+                               }
+                        }else{
+                            url=SetUrlParm("content",'true');
+                            if(url.indexOf("page")>0){
+                                window.location.href=url.changeQuery("page","1");
+                            }else{
+                                window.location.href=url;
+                            }
+                        }
+                        scope.$apply();
+                    })
+                }
+            }
+        });
+        app.controller("bodyCtrl",["$scope","cache",'$window','$interval', "$http" , function(scope,cache,window,$interval,$http){
+            if(getQueryStringRegExp("content")!="false"&&getQueryStringRegExp("content")!=null&&getQueryStringRegExp("content")!=""){
+                scope.model=true;
+            }
+            var reloadFunc = function(){window.location.reload()};
+            loginObj.init(scope,$interval,reloadFunc,reloadFunc).bind();
+            scope.menuItenmenus={},scope.loadStatus={},scope.loadError={};
+            scope.$on('collect-callback',function(e){
+                scope.errorIcon = e.targetScope.errorIcon;
+                scope.errorMsg = e.targetScope.errorMsg;
+                scope.showErrorMsg = true;
+            })
+        }]);
+     
+    </script> 
+ 
+ </body>
+</html>

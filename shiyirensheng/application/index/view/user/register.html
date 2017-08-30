@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <!-- <meta http-equiv="refresh" content="0"> -->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css1/login.css">
+    <script type="text/javascript" src="__PUBLIC__/js1/jquery-1.8.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/ajax.js"></script>
+    <script type="text/javascript">
+        window.onload = function ()
+        {
+            var btn = document.getElementById('btn');
+            var n = 30;
+            var timer = null;
+            btn.onclick = function ()
+            {
+                this.disabled = true;
+                _this = this;
+                //设置一个定时器
+                timer = setInterval(function(){
+                    n--;
+                    _this.value = n + '秒后重新发送';
+                    
+                    if (n == 0) {
+                        clearInterval(timer);
+                        _this.value = '重新发送';
+                        _this.disabled = false;
+                        n = 30;
+                    }
+                }, 1000);
+            }
+            var tongyi = document.getElementById('tongyi');
+            var zhuce = document.getElementById('zhuce');
+
+            tongyi.onclick = function()
+            { 
+                if (tongyi.checked == false) {
+                    zhuce.disabled = true;
+                } else {
+                    zhuce.disabled = false;
+                }
+            }
+        }
+    </script>
+</head>
+{__NOLAYOUT__}
+<body class="login_bj" >
+    <div class="zhuce_body">
+        <div class="zhuce_kong">
+        	<div class="zc">
+            	<div class="bj_bai">
+                <h3>欢迎注册</h3>
+           	  	  <form action="__PUBLIC__/index/user/register" method="post" >
+                    <input name="username" id="username" type="text" class="kuang_txt phone" placeholder="请输入用户名"> <span id="tip"></span>
+                    <input name="email" id="email" type="text" class="kuang_txt email" placeholder="请输入邮箱邮箱"> <span id="tip1"></span>
+                    <input name="password" id="pwd" type="password" class="kuang_txt possword" placeholder="请输入密码"> <span id="tip2"></span>
+                    <input name="rpassword" id="rpwd" type="password" class="kuang_txt possword" placeholder="请确认密码"> <span id="tip3"></span>
+                    <input name="yzm" type="text" id="yzm" class="kuang_txt yanzm" placeholder="请输入验证码" style="width:125px;">
+                	<input type="button" name="mail" value="获取验证码" id="btn" style="height:34px;"> <span id="tip4"></span>
+                    <div>
+                   		<input type="checkbox" checked id="tongyi" ><span>已阅读并同意<a href="#" target="_blank"><span class="lan">《XXXXX使用协议》</span></a></span>
+                    </div>
+                    <input id="zhuce" type="submit" class="btn_zhuce" value="注册" > <span id="tip5"></span>
+                    </form>
+                </div>
+            	<div class="bj_right">
+                	<p>使用以下账号直接登录</p>
+                    <a href="#" class="zhuce_qq">QQ注册</a>
+                    <a href="#" class="zhuce_wb">微博注册</a>
+                    <a href="#" class="zhuce_wx">微信注册</a>
+                    <p>已有账号？<a href="__PUBLIC__/index/user/login">立即登录</a></p>           
+                </div>
+            </div>      
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+var zhuce = [];
+$("#username").blur(function(){
+    var tip = document.getElementById('tip');
+    var username = $("#username").val();
+    // alert(username);
+    if(username==''){
+        tip.innerHTML = '用户名不能为空';
+        tip.style.color = 'red';
+    } else if(username.length < 3 || username.length > 16) {
+        tip.innerHTML = '用户名不能大于16小于3';
+        tip.style.color = 'red';
+    } else {
+        $.ajax({
+            type:'post',
+            url:'/index/user/regs',
+            async:true,
+            data:{'username':username},
+            success:success,
+        });
+        function success(res) {
+            if (res) {
+               tip.innerHTML = '用户名已存在';
+               tip.style.color = 'plum';
+            }else{
+               zhuce.push(true);
+               tip.innerHTML = '用户名可用';
+               tip.style.color = 'green';
+            }
+        }        
+    }
+});
+    
+$("#email").blur(function(){
+    var tip = document.getElementById('tip1');
+    var email = $("#email").val();
+    var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if(email==''){
+        tip.innerHTML = '邮箱不能为空';
+        tip.style.color = 'red';
+    }  else if(!email.match(reg)){
+        tip.innerHTML = '邮箱格式错误';
+        tip.style.color = 'red';
+    } else if(email.length > 30) {
+        tip.innerHTML = '邮箱长度不能超过30';
+        tip.style.color = 'red';
+    } else {
+        $.ajax({
+            type:'post',
+            url:'/index/user/email',
+            async:true,
+            data:{'email':email},
+            success:success,
+        });
+        function success(res) {
+            if (res) {
+               tip.innerHTML = '邮箱已存在';
+               tip.style.color = 'plum';
+            } else {
+               zhuce.push(true);
+               tip.innerHTML = '邮箱可用';
+               tip.style.color = 'green';
+            }
+        }        
+    }
+});
+var yanzenma = '';
+$('#btn').click(function(){
+    var tip = document.getElementById('tip4');
+    var mail = $("#email").val();
+    $.ajax({    
+            type:'post',
+            url:'/index/user/mail',
+            async:true,
+            data:{'mail':mail},
+            success:success,
+        });
+        function success(res) {
+            if (typeof res === 'string')
+                res = JSON.parse(res);
+             tip.innerHTML = '发送成功';
+             tip.style.color = 'green';
+            if (!res.error) {
+                yanzenma = res.yza;  
+            }
+        }
+});
+
+$("#pwd").blur(function(){
+    var tip = document.getElementById('tip2');
+    var pwd = $("#pwd").val();
+    var reg = /^(?![^a-zA-Z]+$)(?!\D+$)/;
+    if(pwd==''){
+        tip.innerHTML = '密码不能为空';
+        tip.style.color = 'red';
+    } else if(pwd.length > 20 || pwd.length < 6) {
+        // alert(pwd.length);
+        tip.innerHTML = '密码不能超过20小于6';
+        tip.style.color = 'red';
+    } else if(!pwd.match(reg)){
+        tip.innerHTML = '密码需数字字母组合';
+        tip.style.color = 'red';
+    } else {
+        $.ajax({    
+            type:'post',
+            url:'/index/user/pwd',
+            async:true,
+            data:{'password':pwd},
+            success:success,
+        });
+        function success(res) {
+            if (res) {
+                // console(res);
+                zhuce.push(true);
+               tip.innerHTML = '密码可用';
+               tip.style.color = 'green';
+            }
+        }        
+    }
+});
+$("#rpwd").blur(function(){
+    var tip = document.getElementById('tip3');
+    var rpwd = $("#rpwd").val();
+    var pwd = $("#pwd").val();
+    var reg = /^(?![^a-zA-Z]+$)(?!\D+$)/;
+    if(rpwd==''){
+        tip.innerHTML = '密码不能为空';
+        tip.style.color = 'red';
+    } else if(pwd != rpwd) {
+        tip.innerHTML = '两次密码不一致';
+        tip.style.color = 'red';
+    } else {
+        $.ajax({    
+            type:'post',
+            url:'/index/user/rpwd',
+            async:true,
+            data:{'rpassword':rpwd},
+            success:success,
+        });
+        function success(res) {
+            if (res) {
+                // console(res);
+               zhuce.push(true);
+               tip.innerHTML = '密码正确';
+               tip.style.color = 'green';
+            }
+        }        
+    }
+});
+
+$("#yzm").blur(function(){
+    var tip = document.getElementById('tip4');
+    var yzm = $("#yzm").val();
+    var reg = /^[0-9]*$/;
+    if(yzm==''){
+        tip.innerHTML = '验证码不能为空';
+        tip.style.color = 'red';
+    } else if(yzm != yzm.match(reg) || yzm != yanzenma) {
+        tip.innerHTML = '验证码错误';
+        tip.style.color = 'red';
+    } else {
+        $.ajax({    
+            type:'post',
+            url:'/index/user/yzm',
+            async:true,
+            data:{'yzm':yzm},
+            success:success,
+        });
+        function success(res) {
+            if (res) {
+                zhuce.push(true);
+               tip.innerHTML = '验证码正确';
+               tip.style.color = 'green';
+            }
+        }        
+    }
+});
+//提交注册
+var zhu = document.getElementById('zhuce');
+$('#zhuce').click(function(){
+    var tip = document.getElementById('tip5');
+    if(zhuce.length === 5) {
+        return true;
+    } else {
+        $('#zhuce').attr("disabled",true);
+        tip.innerHTML = '请填写完整信息';
+        tip.style.color = 'red';
+    }
+    return true;
+});
+
+</script>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css1/login.css">
+    <script type="text/javascript" src="__PUBLIC__/js1/jquery-1.8.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/ajax.js"></script>
+</head>
+
+<body class="login_bj">
+    {__NOLAYOUT__}
+    <div class="zhuce_body">
+        <div class="zhuce_kong login_kuang">
+            <div class="zc">
+                <div class="bj_bai">
+                    <h3 style="height:60px;">登录</h3>
+                    <form action="__PUBLIC__/index/user/login" method="post" style="width:240px; height:290px;" onsubmit="return log()">
+                        <input name="username" id="username" type="text" class="kuang_txt" placeholder="用户名">
+                        <p id="btn"></p>
+                        <input name="password" type="password" id="password" class="kuang_txt" placeholder="密码">
+                        <p id="btn1"></p>
+                        <div style="width:125px;height:35px;">
+                            <input name="yzm" type="text" id="yzm" class="kuang_txt yanzm" placeholder="验证码" style="width:115px;margin-top:0px;">
+                        </div>
+                        <img src="{:captcha_src()}" onclick="this.src='{:captcha_src()}';" />
+                        <p id="btn2"></p>
+                        <div style="height:38px;">
+                            <a href="__PUBLIC__/index/user/pwdforget" style="margin-right:20px;">忘记密码？</a><input name="" type="checkbox" value="" checked><span>记住我</span>
+                        </div>
+                        <input name="submit" type="submit" id="login" class="btn_zhuce" value="登录">
+                        <p id="btn3"></p>
+                    </form>
+                </div>
+                <div class="bj_right">
+                    <p>使用以下账号直接登录</p>
+                    <a href="__PUBLIC__/index/user/qqlogin" class="zhuce_qq">QQ登录</a>
+                    <a href="#" class="zhuce_wb">微博登录</a>
+                    <a href="#" class="zhuce_wx">微信登录</a>
+                    <p>没有账号？<a href="__PUBLIC__/index/user/register">立即注册</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $("#username").blur(function() {
+        var tip = document.getElementById('btn');
+        var username = $("#username").val();
+        if (username == '') {
+            $('#login').attr("disabled", true);
+            tip.innerHTML = '用户名不能为空';
+            tip.style.color = 'red';
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/index/user/username',
+                async: true,
+                data: {
+                    'username': username
+                },
+                success: success,
+            });
+
+            function success(res) {
+                if (res) {
+                    $('#login').attr("disabled", false);
+                    tip.innerHTML = '用户名正确';
+                    tip.style.color = 'green';
+                } else {
+                    $('#login').attr("disabled", true);
+                    tip.innerHTML = '用户名不存在';
+                    tip.style.color = 'plum';
+                }
+            }
+        }
+    });
+
+    $("#password").blur(function() {
+        var tip = document.getElementById('btn1');
+        var password = $("#password").val();
+        var username = $("#username").val();
+        if (password == '') {
+            $('#login').attr("disabled", true);
+            tip.innerHTML = '密码不能为空';
+            tip.style.color = 'red';
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/index/user/password',
+                async: true,
+                data: {
+                    'password': password,
+                    'username': username
+                },
+                success: success,
+            });
+
+            function success(res) {
+                if (res) {
+                    $('#login').attr("disabled", false);
+                    tip.innerHTML = '密码正确';
+                    tip.style.color = 'green';
+                } else {
+                    $('#login').attr("disabled", true);
+                    tip.innerHTML = '密码错误';
+                    tip.style.color = 'red';
+                }
+            }
+        }
+    });
+
+    $("#yzm").blur(function() {
+        var tip = document.getElementById('btn2');
+        var yzm = $("#yzm").val();
+        if (yzm == '') {
+            $('#login').attr("disabled", true);
+            tip.innerHTML = '验证码不能为空';
+            tip.style.color = 'red';
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '/index/user/yanzm',
+                async: true,
+                data: {
+                    'yzm': yzm
+                },
+                success: success,
+            });
+
+            function success(res) {
+                if (res) {
+                    $('#login').attr("disabled", false);
+                    tip.innerHTML = '验证码正确';
+                    tip.style.color = 'green';
+                } else {
+                    $('#login').attr("disabled", true);
+                    tip.innerHTML = '验证码错误';
+                    tip.style.color = 'red';
+                }
+            }
+        }
+    });
+
+    // $("#login").click(function(){
+    //     var yzm = $("#yzm").val();
+    //     var password = $("#password").val();
+    //     var username = $("#username").val();
+    //     var tip = document.getElementById('btn3');
+    //     if () {
+    //         $('#login').attr("disabled",false);
+    //     } else {
+    //         $('#login').attr("disabled",true);
+    //         tip.innerHTML = '请填写完整信息';
+    //         tip.style.color = 'red';
+
+    //     }
+    // });
+
+    function log() {
+        var code = $("#yzm").val();
+        var password = $("#password").val();
+        var username = $("#username").val();
+        var tip1 = document.getElementById('btn');
+        var tip2 = document.getElementById('btn1');
+        var tip = document.getElementById('btn2');
+        if (username == '') {
+            tip1.innerHTML = '请填写用户名';
+            tip1.style.color = 'red';
+            return false;
+        } else if (password == '') {
+            tip2.innerHTML = '请填写密码';
+            tip2.style.color = 'red';
+            return false;
+        } else if (code == '') {
+            tip.innerHTML = '请填写验证码';
+            tip.style.color = 'red';
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+
+</html>

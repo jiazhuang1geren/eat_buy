@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <link rel="icon" type="image/png" href="__PUBLIC__/images1/favicon.ico"/>
+    <!-- <link href="__PUBLIC__/css1/style.css" rel="stylesheet" type="text/css" /> -->
+    <script type="text/javascript" src="__PUBLIC__/js1/public.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/jqpublic.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/cart.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/css1/common.css"/> 
+
+</head>
+<body class="day " ng-controller="bodyCtrl"  day-or-night>
+    <section class="common-back" id="wrapBackground">
+        
+        <div id="main-box">
+             <!--二维码-->
+            <div class="qrCode-frame" ng-hide="qrCodeStatus">
+                <img src="__PUBLIC__/images1/wx.png" alt="扫描二维码" />
+                <em ng-click="qrCodeStatus=true">X</em>
+            </div>
+        
+            <div ng-controller="colorAction">
+                <div class="dayColor_two"></div>
+                <div class="dayColor_one"></div>
+                <div class="dayColor_three" ng-class="{dayColor_threeActive:threeActive}"></div>
+            </div>
+    <div class="footer-location-page common-width">
+        <div id="help_container" class="mainwidget">
+            <div class="content" style="width:90%;">
+                <div class="titleContainer">
+                    <h1>购物车</h1>
+                </div>
+                <hr/>
+                <div class="helpDescription">
+                    <form action="#">
+ <div class="gwc">
+  <table cellpadding="0" cellspacing="0" class="gwc_tb1">
+    <tr>
+      <td class="tb1_td1"><input id="Checkbox1" type="checkbox"  class="allselect"/></td>
+      <td class="tb1_td1">全选</td>
+      <td class="tb1_td3">商品</td>
+      <td class="tb1_td4">原价</td>
+      <td class="tb1_td5">数量</td>  
+      <td class="tb1_td6">单价</td>
+      <td class="tb1_td7">操作</td>
+    </tr>
+  </table>
+{if !empty($car)}
+{foreach $car as $value}
+  <table cellpadding="0" cellspacing="0" class="gwc_tb2" id="table{$value['cid']}" >
+
+    <tr>
+     <td colspan="7" class="shopname Font14 FontW">店铺：{$Think.session.shopp} </td>
+    </tr>   
+    <tr>
+        <td class="tb2_td1">
+            <input type="checkbox" value="1" name="newslist" id="newslist-1" />
+            <input type="hidden" value="{$Think.session.scid}" id="scid" />
+        </td>
+        <td class="tb2_td2">
+            <a href="#"><img src="{$Think.session.photo}"/></a>
+        </td>
+        <td class="tb2_td3">
+            <a href="#" id="cai">{$value['gsname']}</a>
+        </td>
+        <td class="tb1_td4">
+            <s>￥{$value['sales']}</s>
+        </td>
+        <td class="tb1_td5">
+            <input id="min1" name=""  style="width:30px; height:30px;border:1px solid #ccc;" type="button" value="-" />
+            <input id="text_box1" name="" type="text" value="1" style=" width:30px;height:20px; text-align:center; border:1px solid #ccc;margin-bottom:30px;" />
+            <input id="add1" name="" style="width:30px; height:30px;border:1px solid #ccc;" type="button" value="+" />
+        </td>
+        <td class="tb1_td6">
+        <label id="total1" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;"></label>
+         <input type="hidden" value="{$Think.session.price}" id="price" />
+        </td>
+        <td class="tb1_td7">
+            <sapn id="dele">删除</span>
+        </td>
+    </tr>
+  </table>
+    {/foreach}
+{/if}
+  <script type="text/javascript">
+    var price = $('#price').val()
+    $('#dele').click(function(){
+      var scid = $('#scid').val();
+      $.ajax({
+        type:'post',
+        url:'/index/car/dele',
+        async:true,
+        data:{'scid':scid},
+        success:success,
+      });
+      function success(asd){
+          if (asd) {
+            window.location.href = "/index/car/car";
+            session(null);
+          } else {
+            return false;
+          }
+      }
+    });
+  </script>
+  
+  <table cellpadding="0" cellspacing="0" class="gwc_tb3">
+    <tr>
+      <td class="tb1_td1"><input id="checkAll" class="allselect" type="checkbox" /></td>
+      <td class="tb1_td1">全选</td>
+      <td class="tb3_td1"><input id="invert" type="checkbox" />
+        反选
+        <input id="cancel" type="checkbox" />
+        取消 </td>
+      <td class="tb3_td2 GoBack_Buy Font14"><a href="__PUBLIC__/index/shop/list">继续购物</a></td>
+      <td class="tb3_td2">已选商品
+        <label id="shuliang" style="color:#ff5500;font-size:14px; font-weight:bold;">0</label>
+        件
+      </td>
+      <td class="tb3_td3">合计(不含运费):<span>￥</span><span style=" color:#ff5500;">
+        <label id="zong1" style="color:#ff5500;font-size:14px; font-weight:bold;">0.00</label>
+        </span>
+      </td>
+      <td class="tb3_td4"><span id="jz1">结算</span><a href="__PUBLIC__/index/order/order" style=" display:none;"  class="jz2" id="jz2">结算</a></td>
+    </tr>
+  </table>
+</div>
+</form>
+<script type="text/javascript">
+    $("#jz2").click(function(){
+      var price = $('#price').val();
+      var num = $('#text_box1').val();
+      var cai = $('#cai').html();
+      // console.log(cai);
+      $.ajax({
+        type:'post',
+        url:'/index/order/order',
+        async:true,
+        data:{'price':price,'num':num,'cai':cai},
+        success:success,
+      });
+      function success(res){
+
+      }
+    });
+  </script>
+            </div>  
+        </div>
+    </div>
+</div>
+    </div>
+</section>
+</body>
+</html>
+<style type="text/css" media="screen">
+
+/*****cart*********/
+.gwc{ width:900px;overflow:hidden; clear:both;}
+.gwc .shopname{height:35px;line-height:35px;text-indent:1em;border-bottom:1px #dddddd solid;color:#666;}
+.gwc_tb1{ width:100%; border-top:1px solid #dddddd; background:#f1f1f1; height:30px; margin-top:20px; overflow:hidden;font-weight:bold;font-size:14px;box-shadow:0 5px 10px #eaeaea;}
+.tb1_td1{ width:35px; text-align:center;}
+.tb1_td3{ width:240px; text-align:center;}
+.tb1_td4{ width:100px; text-align:center;}
+.tb1_td5{ width:200px; text-align:center;}
+.tb1_td6{ width:135px; text-align:center;}
+.tb1_td7{ text-align:center;}
+.gwc_tb2{ width:100%; margin-top:20px; background:#fdfdfd; border:1px solid #dcdcdc; padding-bottom:20px;}
+.tb2_td1{ width:60px;text-align:center;}
+.tb2_td2{ width:100px; text-align:center;padding:8px 0;}
+.tb2_td2 img{ width:96px; height:96px; border:1px solid #dddddd;}
+.tb2_td3{ width:145px; padding-left:12px;}
+.tb2_td3 a{ font-size:14px; line-height:22px;}
+
+.gwc_tb3{ width:100%; border:1px solid #d2d2d2; background:#e7e7e7; height:46px; margin-top:20px; }
+.gwc_tb3 tr td{font-size:14px;}
+.tb3_td2{ width:100px;text-align:center;}
+.tb3_td2 span{ color:#ff5500;font-size:14px; font-weight:bold; padding-left:5px; padding-right:5px; }
+.tb3_td3{ width:220px;text-align:center;}
+.tb3_td3 span{ font-size:18px; font-weight:bold;}
+.tb3_td4{ width:110px;text-align:center;}
+.jz2{ width:100px; height:46px; line-height:46px; text-align:center; font-size:18px;font-weight:bold; color:#fff; background:#ff0000; display:block; float:right;}
+#jz1{font-size:18px;font-weight:bold;color:#999;}
+.GoBack_Buy a{ width:100px; height:46px; line-height:46px; text-align:center;color:#fff; background:#333; display:block; float:right;}
+/******confirm_order.html*******/
+
+</style>

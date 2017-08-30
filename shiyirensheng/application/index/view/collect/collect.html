@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="user-scalable=no">
+    <meta name="google-site-verification" content="BstJA3X9z6f9HcvoN9AZTwaKo_9Abj_j7dVBPfy640s" />
+    <meta name="baidu-site-verification" content="IYCrtVH0i1" />
+    <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
+    <link rel="icon" type="image/png" href="__PUBLIC__/images1/favicon.ico"/> 
+    <script type="text/javascript">
+        (function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
+    </script>   
+    <link rel="stylesheet" href="__PUBLIC__/css1/common.css"/>   
+    <link rel="stylesheet" href="__PUBLIC__/css1/user_center.css"/>
+    <title>个人中心 - 我的收藏</title>
+</head>
+<body class="day " ng-controller="bodyCtrl"  day-or-night>
+    <section class="common-back" id="wrapBackground">
+        {layout name="layout" /}
+        <div id="main-box">
+             <!--二维码-->
+            <div class="qrCode-frame" ng-hide="qrCodeStatus">
+                <img src="__PUBLIC__/images1/wx.png" alt="扫描二维码" />
+                <em ng-click="qrCodeStatus=true">X</em>
+            </div>
+            <div ng-controller="colorAction">
+                <div class="dayColor_two"></div>
+                <div class="dayColor_one"></div>
+                <div class="dayColor_three" ng-class="{dayColor_threeActive:threeActive}"></div>
+            </div>     
+    <section>
+        <div class="user-center-main-box common-width clearfix">
+            <aside class="fl">
+                <ul>
+                    <li >
+                        <a href="__PUBLIC__/index/user/personal" rel="nofollow">账号管理</a>
+                    </li>
+                    <li >
+                        <a href="__PUBLIC__/index/order/numberorder" rel="nofollow">我的订单</a>
+                    </li>
+                    <li class="active">
+                        <a href="__PUBLIC__/index/collect/collect" rel="nofollow">我的收藏</a>
+                    </li>
+                    <li >
+                        <a href="__PUBLIC__/index/order/address"  rel="nofollow">地址管理</a>
+                    </li>
+                </ul>
+            </aside>
+            <article class="fl user-center-main">
+                <header>收藏的餐厅</header>
+        <ul class="favorite clearfix transform-style">
+                <li class="restaurant-item fl trans">
+                    <div class="img-box fl">
+                        <a href="shop_detail.html"><img src="http://dhcrestaurantlogo.dhero.cn/1019?v=1402245333" width="82px" height="82px"></a>
+                    </div>
+                    <article class="restaurant-introduce fl">
+                        <h3 class="ellipsis"><a href="/shanghai/ji-xiang-hun-tun-gao-an-lu-dian/menu/">吉祥馄饨 (高安路店)</a></h3>
+                        <dl class="clearfix">
+                            <dt class="fl">饮料小吃</dt>
+                            <dd class="r-small-star fl">
+                                <div class="r-small-star score" style="width:65.00px"></div>
+                            </dd>
+                        </dl>
+                        <div class="restaurant-state clearfix">
+                                    <span><img src="http://dhcactivity.dhero.cn/Flswo958RM8GgqlKACT4tY5kr5K7?imageView2/1/w/15/h/15/" alt="" /></span>
+                                
+                                    <span><img src="http://dhcactivity.dhero.cn/FjnSIEuUzJvV6j-ifPq7zevJSt30?imageView2/1/w/15/h/15/" alt="" /></span>
+                                
+                            
+                        </div>
+                    </article>
+                    <div class="close-favorite" data-rid="1019">&times;</div>
+                </li>
+            
+        </ul>
+        <page show="5" total="1"></page>
+          </article>
+        </div>
+    </section>
+
+        </div>
+    </section>
+ 
+    <dh-dialog class="disnone" height="500" feeedbackclass="userFeedback" type="user-feedback" header="意见反馈" show="userFeedback">
+        <div ng-controller="feedbackCtrl">
+            <form novalidate="true" name="feedbackForm" class="inline">
+                <div class="form-group row mb10">
+                    <label class="col-3">联系方式：</label>
+                    <div class="col-8">
+                        <input type="text" maxlength="20" name="userContact" required ng-focus="userContactFocus()" ng-class="{error:feedback.phoneMessage}" placeholder="请输入您的手机号码" ng-model="feedback.userContact"/>
+                    </div>
+                </div>
+                <div class="row mb10">
+                    <div class="clo-8 col-offset-3" ng-if="feedback.phoneMessage">
+                        <span class="vaildate-error">联系方式不能为空</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-3 vt">反馈信息：</label>
+                    <div class="col-8">
+                        <textarea name="feedbackMessage"  placeholder="可以说说您对外卖超人的意见" ng-focus="feedbacFocus()" required ng-class="{error:feedback.feedbackMessageTip}" ng-model="feedback.feedbackMessage" maxlength="300" cols="25" rows="7"></textarea>
+                    </div>
+                </div>
+                <div class="row mb10">
+                    <div class="clo-8 col-offset-3" ng-if="feedback.feedbackMessageTip">
+                        <span class="vaildate-error">反馈信息不能为空</span>
+                    </div>
+                </div>
+                <div class="tc">
+                    <button class="btn normal-btn btn-success" ng-click="feedbackSubmit()">确认</button>
+                    <button class="btn normal-btn btn-cancel" ng-click="feedbackCancel()">取消</button>
+                </div>
+            </form>
+        </div>
+        <div class="common-dialog-footer">
+            咨询加QQ群：337212031
+        </div>
+    </dh-dialog>
+    
+    <dh-dialog class="disnone" type="alert" index="1001" header="" show="errorShow">
+        <div class="alert-box error">
+            <p ng-bind="errorMsg"></p>
+        </div>
+    </dh-dialog>
+
+     <ul class="site-fixed">
+        <li class="scroll-top"><img src="__PUBLIC__/images1/scroll_top1.png" alt=""/> </li>
+        <li class="scorll-feekback" ng-click="userFeedback=true">
+            <img src="__PUBLIC__/images1/scorll_feekback.png" alt=""/>
+            <div>意见反馈</div>
+        </li>
+        <li class="scroll-wx">
+            <img src="__PUBLIC__/images1/scroll_wx.png" alt=""/>
+             <div><img src="__PUBLIC__/images1/wx.png" alt=""/></div>
+        </li>
+    </ul>
+    
+    <script type="text/javascript" src="__PUBLIC__/js1/angular.min.js"></script>
+    <script src="__PUBLIC__/js1/common.js"></script>
+    
+     
+    <script src="__PUBLIC__/js1/service.js"></script>
+    
+    <script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
+    <!--[if lt IE 9]><script src="js/fix.js"></script><![endif]-->
+    
+    
+    <script>
+        var reviewUrl = "/mobile/ajax/order_review/",favoriteUrl = "/ajax/restaurant/0/favorite/";
+    </script>
+    <script src="__PUBLIC__/js1/user_center.js"></script>
+
+    
+    <script>angular.bootstrap(document, ["app"]);</script>
+
+    <!-- Baidu Analytics -->
+
+
+
+</body>
+</html>

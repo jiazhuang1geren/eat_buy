@@ -1,0 +1,146 @@
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta property="wb:webmaster" content="239d3d1dbdde1b2c" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css1/reset.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css1/common.css"/>
+    
+    <link rel="stylesheet" href="__PUBLIC__/css1/forget_passwd.css"/>
+    <title>找回密码</title>
+    <script type="text/javascript" src="__PUBLIC__/js1/jquery-1.8.1.js"></script>
+</head>
+<body>
+    <header id="header" class="">
+        <div class="common-width">
+            
+                <section class="clearfix">
+                    <h1 class="logo" title="外卖超人">
+                        <a href="index.html"></a>
+                    </h1>
+                    <span class="page-name"> | 找回密码</span>
+                </section>
+        </div>
+    </header>
+    
+    <section class="main">
+        <div class="common-width">
+            
+    <div class="main-inner" style="margin-bottom: 200px;">
+        <div class="passwd-nav-box">
+            <ol class="passwd-nav">
+                <li class="first done">
+                    <span><i>1</i><em>身份验证</em></span>
+                </li>
+                <li class="middle ">
+                    <span><i>2</i><em>重设登录密码</em></span>
+                </li>
+                <li class="last ">
+                    <span><i>3</i><em>完成</em></span>
+                </li>
+            </ol>
+        </div>
+    
+
+    <div class="fill-data-box" id="phoneStep">
+        <div style="margin-left:100px;">
+            手机号：<input type="text" name="sj" class="name"> <label id="btn"></label> <br>
+            <input type="hidden" name="yzm2" id="yzm2"> <br>
+            验证码：<input type="text" name="yzm" class="yzm"> <label id="btn1"></label><br>
+            <input type="button" name="hq" value="获取验证码" id="hq" style="height:34px;">
+            <button class="form-btn" id="next" style="width:100px; margin-top:5px;">下一步</button>
+            <ul class="other-way">
+                <li>其他方式</li>
+                <li>联系客服，可以拨打<span>4001 517 577</span></li>
+            </ul>
+        </div>    
+    </div>
+    </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+    $('.name').blur(function(){
+        var tip = document.getElementById('btn');
+        var sj = $('.name').val();
+        if (sj == '') {
+            $('#next').attr("disabled",true);
+            tip.innerHTML = '手机号码不能为空！';
+            tip.style.color = 'red';
+        } else {
+            $('#next').attr("disabled",false);
+            tip.innerHTML = '';
+        }
+    });
+    $('.yzm').blur(function(){
+        var tip = document.getElementById('btn1');
+        var yzm = $('.yzm').val();
+        if (yzm == '') {
+            $('#next').attr("disabled",true);
+            tip.innerHTML = '验证码不能为空！';
+            tip.style.color = 'red';
+        } else {
+            $('#next').attr("disabled",false);
+            tip.innerHTML = '';
+        }
+    });
+    $('#hq').click(function(){
+        var name = $('.name').val();
+        $.ajax({
+            method: 'get',
+            url: '/index/user/pwdforpost',
+            async: true,
+            data: {'name':name},
+            success: success,
+        });
+        function success(data)
+        {
+
+            var a = $('#yzm2').val(data);
+        }    
+    });
+    $('#next').click(function(){
+        var yzm = $('.yzm').val();
+        var yzm2 = $('#yzm2').val();
+        var sj = $('.name').val();
+        $.ajax({
+            type:'post',
+            url:'/index/user/add_phone',
+            async:true,
+            data:{'yzm':yzm,'yzm2':yzm2,'sj':sj},
+            success: success,
+        });
+        function success(sec)
+        {  
+            if (!sec) {
+               window.location.href = "/index/user/pwdreset";
+            } else {
+                alert('验证码错误');
+            }
+        }    
+    });
+
+    </script>
+    <footer id="footer">
+        <div class="footer-first gray">
+            <div class="company-info clearfix fs14 gray">
+                <a href="/about_us/" target="_blank"  rel="nofollow">关于我们</a>
+                <a href="/help/" target="_blank"  rel="nofollow">帮助中心</a>
+                <a href="/terms-and-conditions/" target="_blank"  rel="nofollow">法律声明</a>
+                <a href="/jobs/" target="_blank"  rel="nofollow">人才招聘</a>
+                <a href="/contact/" class="last" target="_blank"  rel="nofollow">联系我们</a>
+                <a href="/restaurant/list/shanghai/1/" class="last" target="_blank" style="display:none">上海餐厅导航</a>
+            </div>
+        </div>
+        <div class="footer-last">
+            <a target="_blank" class="foot-logo-1 base-logo" href="index.html"></a>
+            <div class="tc fs14 light-gray mb10">
+              ©2014 waimaichaoren.com All Rights Reserved - 沪ICP备11019908号
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>

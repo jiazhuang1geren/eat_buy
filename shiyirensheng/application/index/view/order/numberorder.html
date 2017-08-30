@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <link href="__PUBLIC__/css1/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="__PUBLIC__/js1/public.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/jquery.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/jqpublic.js"></script>
+    <link rel="icon" type="image/png" href="__PUBLIC__/images1/favicon.ico"/>
+    <script type="text/javascript">
+        
+        (function(document, screen) {if (screen.width < 760) {document.location.href="/mobile/";}}(document, screen));
+    </script>
+    <link rel="stylesheet" href="__PUBLIC__/css1/common.css"/>
+    <link rel="stylesheet" href="__PUBLIC__/css1/user_center.css"/>
+    <title>个人中心 - 订单管理</title>
+</head>
+<body class="day " ng-controller="bodyCtrl"  day-or-night>
+    <section class="common-back" id="wrapBackground">
+        {layout name="layout" /}
+        <div id="main-box">
+             <!--二维码-->
+            <div class="qrCode-frame" ng-hide="qrCodeStatus">
+                <img src="__PUBLIC__/images1/wx.png" alt="扫描二维码" />
+                <em ng-click="qrCodeStatus=true">X</em>
+            </div>
+        
+            <div ng-controller="colorAction">
+                <div class="dayColor_two"></div>
+                <div class="dayColor_one"></div>
+                <div class="dayColor_three" ng-class="{dayColor_threeActive:threeActive}"></div>
+            </div>
+    <section>
+        <div class="user-center-main-box common-width clearfix">
+            <aside class="fl">
+                <ul>
+                    <li>
+                        <a href="__PUBLIC__/index/user/personal" rel="nofollow">账号管理</a>
+                    </li>
+                    <li class="active">
+                        <a href="__PUBLIC__/index/order/numberorder" rel="nofollow">我的订单</a>
+                    </li>
+                    <li >
+                        <a href="__PUBLIC__/index/collect/collect" rel="nofollow">我的收藏</a>
+                    </li>
+                    <li >
+                        <a href="__PUBLIC__/index/order/address"  rel="nofollow">地址管理</a>
+                    </li>
+                    
+                </ul>
+            </aside>
+            <article class="fl user-center-main">
+                <header>历史订单</header>
+                
+    <section class="user-center-body order" id="orderBody">
+        
+<article class="U-article Overflow" style="width: 760px;">
+  <!--user order list-->
+  <section>
+{//if !empty($order)}
+  {//foreach $order as $value}
+    {foreach $list as $value}
+    <table class="Myorder" style="width: 760px;">
+     <th class="Font14 FontW">订单编号</th>
+     <th class="Font14 FontW">下单时间</th>
+     <th class="Font14 FontW">收件人</th>
+     <th class="Font14 FontW">数量</th>
+     <th class="Font14 FontW">订单状态</th>
+     <tr>
+      <td class="FontW"><a href="#">{$value['ordernum']}</a></td>
+      <td>{$value['odate']}</td>
+      <td>{$value['oname']}</td>
+      <td>{$value['num']}</td>
+      <td>未付款,未发货</td>
+     </tr>
+     <th class="Font14 FontW">订单产品</th>
+     <th class="Font14 FontW">联系地址</th>
+     <th class="Font14 FontW">手机号码</th>
+     <th class="Font14 FontW">订单总价</th>
+     <th class="Font14 FontW">操作</th>
+     <tr>
+      <td class="FontW">{$value['tname']}</td>
+      <td>{$value['address']}</td>
+      <td>{$value['telphone']}</td>
+      <td>￥{$value['gprice']}.00</td>
+      <td><a href="#">取消订单</a> | <a href="#">付款</a></td>
+     </tr>
+    </table>
+    {/foreach}
+    {$page}
+    <style type="text/css" media="screen">
+        .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}  
+        .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}  
+        .pagination .active{background-color: #dd1a20;color: #fff;}  
+        .pagination .disabled{color:#aaa;}   
+    </style>
+  {///foreach}
+{///if}
+  </section>
+ </article>
+</section>
+        </article>
+    </div>
+</section>
+        </div>
+    </section>
+     <ul class="site-fixed">
+        <li class="scroll-top"><img src="__PUBLIC__/images1/scroll_top1.png" alt=""/> </li>
+        <li class="scorll-feekback" ng-click="userFeedback=true">
+            <img src="__PUBLIC__/images1/scorll_feekback.png" alt=""/>
+            <div>意见反馈</div>
+        </li>
+        <li class="scroll-wx">
+            <img src="__PUBLIC__/images1/scroll_wx.png" />
+             <div><img src="__PUBLIC__/images1/wx.png" /></div>
+        </li>
+    </ul>
+    <script type="text/javascript">
+        var token = 'u8wA1RHnkO8OfIWaX5Uxg3u5Og9X718nFVOQTFXg:WsqxKsgpRoNjeOqH4m8Uo80w3TM=:eyJtaW1lTGltaXQiOiJpbWFnZS9qcGVnO2ltYWdlL3BuZyIsInNjb3BlIjoiZGhjLXJlZnVuZCIsImRlYWRsaW5lIjoxNDMwNjIwMDM3LCJmc2l6ZUxpbWl0Ijo1MjQyODgwfQ==';
+        var orderRefund = "/account/order/0/refund/create/";
+        var static = "/static/";
+    </script>
+    <script src="__PUBLIC__/js1/jquery-1.8.1.js"></script>
+    <script src="__PUBLIC__/js1/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js1/angular.min.js"></script>
+    <script src="__PUBLIC__/js1/common.js"></script>
+    <script src="__PUBLIC__/js1/service.js"></script>
+    <script>var feedbackUrl = '/ajax/feedback/';var app = angular.module("app", ["dh.dialog", "dh.form", 'dh.service', 'dh.other']);</script>
+    <!--[if lt IE 9]><script src="js/fix.js"></script><![endif]-->
+    <script>
+        var reviewUrl = "/mobile/ajax/order_review/",favoriteUrl = "/ajax/restaurant/0/favorite/";
+    </script>
+    <script src="__PUBLIC__/js1/user_center.js"></script>
+    <script>angular.bootstrap(document, ["app"]);</script>
+</body>
+</html>
